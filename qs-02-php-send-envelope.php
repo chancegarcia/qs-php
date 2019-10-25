@@ -16,8 +16,8 @@ function send_document_for_signing(){
     #
     # Obtain an OAuth access token from https://developers.docusign.com/oauth-token-generator
     $accessToken = '{ACCESS_TOKEN}';
-    # Obtain your accountId from demo.docusign.com -- the account id is shown in the drop down on the
-    # upper right corner of the screen by your picture or the default picture. 
+    # Obtain your accountId from https://appdemo.docusign.com -- the account id is shown in the drop down on the
+    # upper right corner of the screen by your picture or the default picture.
     $accountId = '{ACCOUNT_ID}';
     # Recipient Information:
     $signerName = '{USER_FULLNAME}';
@@ -41,37 +41,37 @@ function send_document_for_signing(){
     $base64FileContent =  base64_encode ($contentBytes);
 
     # create the DocuSign document object
-    $document = new DocuSign\eSign\Model\Document([  
-        'document_base64' => $base64FileContent, 
+    $document = new DocuSign\eSign\Model\Document([
+        'document_base64' => $base64FileContent,
         'name' => 'Example document', # can be different from actual file name
         'file_extension' => 'pdf', # many different document types are accepted
         'document_id' => '1' # a label used to reference the doc
     ]);
-    
+
     # The signer object
-    $signer = new DocuSign\eSign\Model\Signer([ 
+    $signer = new DocuSign\eSign\Model\Signer([
         'email' => $signerEmail, 'name' => $signerName, 'recipient_id' => "1", 'routing_order' => "1"
     ]);
 
     # DocuSign SignHere field/tab object
-    $signHere = new DocuSign\eSign\Model\SignHere([ 
-        'document_id' => '1', 'page_number' => '1', 'recipient_id' => '1', 
+    $signHere = new DocuSign\eSign\Model\SignHere([
+        'document_id' => '1', 'page_number' => '1', 'recipient_id' => '1',
         'tab_label' => 'SignHereTab', 'x_position' => '195', 'y_position' => '147'
     ]);
 
     # Add the tabs to the signer object
     # The Tabs object wants arrays of the different field/tab types
-    $signer->setTabs(new DocuSign\eSign\Model\Tabs(['sign_here_tabs' => [$signHere]])); 
+    $signer->setTabs(new DocuSign\eSign\Model\Tabs(['sign_here_tabs' => [$signHere]]));
 
     # Next, create the top level envelope definition and populate it.
     $envelopeDefinition = new DocuSign\eSign\Model\EnvelopeDefinition([
         'email_subject' => "Please sign this document",
         'documents' => [$document], # The order in the docs array determines the order in the envelope
         # The Recipients object wants arrays for each recipient type
-        'recipients' => new DocuSign\eSign\Model\Recipients(['signers' => [$signer]]), 
+        'recipients' => new DocuSign\eSign\Model\Recipients(['signers' => [$signer]]),
         'status' => "sent" # requests that the envelope be created and sent.
     ]);
-    
+
     #
     #  Step 2. Create/send the envelope.
     #
@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             print ("\nDocuSign API error information: \n");
             var_dump ($e->getResponseBody());
         }
-    }    
+    }
     die();
 }
 # Since it isn't a POST, print the form:

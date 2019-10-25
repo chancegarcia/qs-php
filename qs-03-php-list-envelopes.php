@@ -13,8 +13,8 @@ function list_envelopes(){
     #
     # Obtain an OAuth access token from https://developers.docusign.com/oauth-token-generator
     $accessToken = '{ACCESS_TOKEN}';
-    # Obtain your accountId from demo.docusign.com -- the account id is shown in the drop down on the
-    # upper right corner of the screen by your picture or the default picture. 
+    # Obtain your accountId from https://appdemo.docusign.com -- the account id is shown in the drop down on the
+    # upper right corner of the screen by your picture or the default picture.
     $accountId = '{ACCOUNT_ID}';
 
     # The API base_path
